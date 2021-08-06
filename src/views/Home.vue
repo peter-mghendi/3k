@@ -7,6 +7,7 @@
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
+import { getNextProductionAsync } from "../client";
 import HelloWorld from "@/components/HelloWorld.vue"; // @ is an alias to /src
 
 @Options({
@@ -14,5 +15,10 @@ import HelloWorld from "@/components/HelloWorld.vue"; // @ is an alias to /src
     HelloWorld,
   },
 })
-export default class Home extends Vue {}
+export default class Home extends Vue {
+  async created() {
+    const nextProduction = await getNextProductionAsync();
+    console.log(nextProduction);
+  }
+}
 </script>
