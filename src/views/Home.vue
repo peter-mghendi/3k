@@ -1,5 +1,11 @@
 <template>
-  <div class="home flex">
+  <div class="home">
+    <div class="py-2 text-center bg-gray-100 text-gray-500" v-show="loading">
+      Loading...
+    </div>
+    <div class="py-2 text-center bg-red-100 text-red-500" v-show="error">
+      {{ error }}
+    </div>
     <div
       class="
         mx-auto
@@ -12,6 +18,7 @@
         gap-4
         p-4
       "
+      v-show="nextProduction"
     >
       <img
         :src="nextProduction?.poster_url"
@@ -43,13 +50,18 @@
 
         <div>
           <p class="text-lg font-semibold">Next up:</p>
-          <router-link :to="{ name: 'home', query: { date: nextProduction?.release_date } }"
+          <router-link
+            :to="{
+              name: 'home',
+              query: { date: nextProduction?.release_date },
+            }"
             class="
               bg-gray-100
               flex
               rounded-xl
               align-middle
               w-full
+              mb-2
               hover:shadow-lg
             "
           >
@@ -67,6 +79,13 @@
               </p>
             </div>
           </router-link>
+          <router-link
+            :to="{ name: 'home' }"
+            class="text-blue-500 font-semibold hover:underline"
+            v-show="$route.query.date"
+          >
+            &lt; Back to Today
+          </router-link>
         </div>
       </div>
     </div>
@@ -74,36 +93,40 @@
 </template>
 
 <script lang="ts">
-
 import { Vue } from "vue-class-component";
 import { getNextProductionAsync } from "@/client";
 import { Production } from "@/client/models";
-import { LocationQuery } from "vue-router";
 
 export default class Home extends Vue {
+  error: string | null = null;
+  loading = false;
   nextProduction: Production | null = null;
 
   async created(): Promise<void> {
-    this.$watch(() => this.$route.query, async (oldQuery: LocationQuery, newQuery: LocationQuery) => {
-      await this.fetchNextProduction();
-    }, { immediate: true });
+    this.$watch(
+      () => this.$route.query.date,
+      async () => {
+        await this.fetchNextProduction();
+      },
+      { immediate: true }
+    );
   }
 
   async fetchNextProduction(): Promise<void> {
-    // Get date query param
-    let date = this.$route.query.date;
+    this.error = null;
+    this.loading = true;
 
-    if (!date) {
-      // Fetches the next production from today.
-      this.nextProduction = await getNextProductionAsync();
-      return;
+    const dateParam = this.$route.query.date;
+    const date = Array.isArray(dateParam) ? dateParam[0] : dateParam;
+
+    try {
+      this.nextProduction = await getNextProductionAsync(date?.valueOf());
+    } catch (e) {
+      this.error = (e as Error).message;
+      this.nextProduction = null;
     }
 
-    // Throw away any repeated params
-    if (Array.isArray(date)) date = date[0];
-      
-    // Fetches the next production from the given date.
-    this.nextProduction = await getNextProductionAsync(date?.valueOf());  
+    this.loading = false;
   }
 }
 </script>
