@@ -1,6 +1,15 @@
 <template>
-  <div class="home">
-    <div class="py-2 text-center bg-gray-100 text-gray-500" v-show="loading">
+  <div class="home min-h-screen">
+    <div
+      class="
+        py-2
+        text-center
+        bg-gray-100
+        text-gray-500
+        dark:bg-gray-800 dark:text-gray-400
+      "
+      v-show="loading"
+    >
       Loading...
     </div>
     <div class="py-2 text-center bg-red-100 text-red-500" v-show="error">
@@ -36,32 +45,35 @@
         "
       >
         <div>
-          <h1 class="text-3xl font-bold">{{ nextProduction?.title }}</h1>
+          <h1 class="text-3xl font-bold dark:text-gray-200">
+            {{ nextProduction?.title }}
+          </h1>
           <h2 class="text-xl font-semibold text-gray-500">
             {{ nextProduction?.type }}
           </h2>
-          <p class="text-lg">
+          <p class="text-lg dark:text-gray-200">
             Airs on {{ nextProduction?.release_date }} (in
             {{ nextProduction?.days_until }} days)
           </p>
         </div>
 
-        <p>{{ nextProduction?.overview }}</p>
+        <p class="dark:text-gray-200">{{ nextProduction?.overview }}</p>
 
         <div>
-          <p class="text-lg font-semibold">Next up:</p>
+          <p class="text-lg font-semibold dark:text-gray-200">Next up:</p>
           <router-link
             :to="{
               name: 'home',
               query: { date: nextProduction?.release_date },
             }"
             class="
-              bg-gray-100
               flex
               rounded-xl
               align-middle
               w-full
               mb-2
+              bg-gray-100
+              dark:bg-gray-800 dark:text-gray-200
               hover:shadow-lg
             "
           >
