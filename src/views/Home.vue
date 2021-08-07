@@ -43,7 +43,7 @@
 
         <div>
           <p class="text-lg font-semibold">Next up:</p>
-          <button
+          <router-link :to="{ name: 'home', query: { date: nextProduction?.release_date } }"
             class="
               bg-gray-100
               flex
@@ -66,7 +66,7 @@
                 {{ nextProduction?.following_production?.release_date }}
               </p>
             </div>
-          </button>
+          </router-link>
         </div>
       </div>
     </div>
@@ -74,15 +74,36 @@
 </template>
 
 <script lang="ts">
+
 import { Vue } from "vue-class-component";
 import { getNextProductionAsync } from "@/client";
 import { Production } from "@/client/models";
+import { LocationQuery } from "vue-router";
 
 export default class Home extends Vue {
   nextProduction: Production | null = null;
 
   async created(): Promise<void> {
-    this.nextProduction = await getNextProductionAsync();
+    this.$watch(() => this.$route.query, async (oldQuery: LocationQuery, newQuery: LocationQuery) => {
+      await this.fetchNextProduction();
+    }, { immediate: true });
+  }
+
+  async fetchNextProduction(): Promise<void> {
+    // Get date query param
+    let date = this.$route.query.date;
+
+    if (!date) {
+      // Fetches the next production from today.
+      this.nextProduction = await getNextProductionAsync();
+      return;
+    }
+
+    // Throw away any repeated params
+    if (Array.isArray(date)) date = date[0];
+      
+    // Fetches the next production from the given date.
+    this.nextProduction = await getNextProductionAsync(date?.valueOf());  
   }
 }
 </script>

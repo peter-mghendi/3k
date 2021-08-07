@@ -3,7 +3,7 @@ export interface Production {
   days_until: number;
   overview: string;
   poster_url: string;
-  release_date: Date;
+  release_date: string;
   title: string;
   type: string;
   following_production?: Production;
