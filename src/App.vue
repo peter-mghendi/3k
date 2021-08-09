@@ -5,6 +5,19 @@
       <router-link :to="{ name: 'about' }">About</router-link>
     </div>
     <router-view />
+    <footer
+      class="p-4 bg-gray-100 text-gray-500 dark:bg-gray-800 dark:text-gray-400"
+    >
+      &copy; {{ new Date().getFullYear() }}
+      <a
+        href="https://github.com/sixpeteunder"
+        class="font-semibold hover:underline"
+        style="color: #b91d47"
+      >
+        sixpeteunder
+      </a>
+      | All rights reserved.
+    </footer>
   </div>
 </template>
 

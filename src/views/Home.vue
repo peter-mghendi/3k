@@ -15,90 +15,86 @@
     <div class="py-2 text-center bg-red-100 text-red-500" v-show="error">
       {{ error }}
     </div>
-    <div
-      class="
-        mx-auto
-        grid grid-cols-1
-        md:grid-cols-2
-        lg:grid-cols-3
-        w-full
-        md:w-4/5
-        lg:w-3/4
-        gap-4
-        p-4
-      "
-      v-show="nextProduction"
-    >
-      <img
-        :src="nextProduction?.poster_url"
-        :alt="nextProduction?.title"
-        class="rounded-xl col-span-1"
-      />
+    <div class="mx-auto w-full md:w-4/5 lg:w-3/4 p-4">
+      <h1 class="text-3xl dark:text-gray-200 mb-4">
+        The next <abbr title="Marvel Cinematic Universe ">MCU</abbr> production
+        being released is:
+      </h1>
       <div
-        class="
-          text-left
-          col-span-1
-          lg:col-span-2
-          py-4
-          flex flex-col
-          justify-between
-        "
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
+        v-show="nextProduction"
       >
-        <div>
-          <h1 class="text-3xl font-bold dark:text-gray-200">
-            {{ nextProduction?.title }}
-          </h1>
-          <h2 class="text-xl font-semibold text-gray-500">
-            {{ nextProduction?.type }}
-          </h2>
-          <p class="text-lg dark:text-gray-200">
-            Airs on {{ nextProduction?.release_date }} (in
-            {{ nextProduction?.days_until }} days)
-          </p>
-        </div>
+        <img
+          :src="nextProduction?.poster_url"
+          :alt="nextProduction?.title"
+          class="rounded-xl col-span-1 mx-auto"
+        />
+        <div
+          class="
+            text-left
+            col-span-1
+            lg:col-span-2
+            py-4
+            flex flex-col
+            justify-between
+          "
+        >
+          <div>
+            <h1 class="text-3xl font-bold dark:text-gray-200">
+              {{ nextProduction?.title }}
+            </h1>
+            <h2 class="text-xl font-semibold text-gray-500">
+              {{ nextProduction?.type }}
+            </h2>
+            <p class="text-lg dark:text-gray-200">
+              Airs on {{ nextProduction?.release_date }} (in
+              {{ nextProduction?.days_until }} days)
+            </p>
+          </div>
 
-        <p class="dark:text-gray-200">{{ nextProduction?.overview }}</p>
+          <p class="dark:text-gray-200">{{ nextProduction?.overview }}</p>
 
-        <div>
-          <p class="text-lg font-semibold dark:text-gray-200">Next up:</p>
-          <router-link
-            :to="{
-              name: 'home',
-              query: { date: nextProduction?.release_date },
-            }"
-            class="
-              flex
-              rounded-xl
-              align-middle
-              w-full
-              mb-2
-              bg-gray-100
-              dark:bg-gray-800 dark:text-gray-200
-              hover:shadow-lg
-            "
-          >
-            <img
-              :src="nextProduction?.following_production?.poster_url"
-              :alt="nextProduction?.following_production?.title"
-              class="h-24 w-auto rounded-xl"
-            />
-            <div class="text-left px-2 my-auto">
-              <p class="font-semibold">
-                {{ nextProduction?.following_production?.title }}
-              </p>
-              <p class="text-sm text-gray-500">
-                {{ nextProduction?.following_production?.release_date }}
-              </p>
-            </div>
-          </router-link>
-          <router-link
-            :to="{ name: 'home' }"
-            class="font-semibold hover:underline"
-            style="color: #b91d47"
-            v-show="$route.query.date"
-          >
-            &lt; Back to Today
-          </router-link>
+          <div>
+            <p class="text-lg font-semibold dark:text-gray-200">Next up:</p>
+            <router-link
+              :to="{
+                name: 'home',
+                query: { date: nextProduction?.release_date },
+              }"
+              class="
+                flex
+                rounded-xl
+                align-middle
+                w-full
+                mb-2
+                bg-gray-100
+                dark:bg-gray-800 dark:text-gray-200
+                hover:shadow-lg
+              "
+            >
+              <img
+                :src="nextProduction?.following_production?.poster_url"
+                :alt="nextProduction?.following_production?.title"
+                class="h-24 w-auto rounded-xl"
+              />
+              <div class="text-left px-2 my-auto">
+                <p class="font-semibold">
+                  {{ nextProduction?.following_production?.title }}
+                </p>
+                <p class="text-sm text-gray-500">
+                  {{ nextProduction?.following_production?.release_date }}
+                </p>
+              </div>
+            </router-link>
+            <router-link
+              :to="{ name: 'home' }"
+              class="font-semibold hover:underline p-2"
+              style="color: #b91d47"
+              v-show="$route.query.date"
+            >
+              &larr; Back to Today
+            </router-link>
+          </div>
         </div>
       </div>
     </div>
