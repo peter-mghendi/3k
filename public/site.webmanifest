@@ -1,6 +1,7 @@
 {
     "name": "3k",
     "short_name": "3k",
+    "description": "Find out when the next movie from the Marvel Cinematic Universe will be released.",
     "icons": [
         {
             "src": "/android-chrome-192x192.png",
@@ -13,7 +14,8 @@
             "type": "image/png"
         }
     ],
-    "theme_color": "#ffffff",
+    "theme_color": "#b91d47",
     "background_color": "#ffffff",
-    "display": "standalone"
+    "display": "standalone",
+    "start_url": "."
 }
