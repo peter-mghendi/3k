@@ -6,7 +6,8 @@
         text-center
         bg-gray-100
         text-gray-500
-        dark:bg-gray-800 dark:text-gray-400
+        dark:bg-gray-800
+        dark:text-gray-400
       "
       v-show="loading"
     >
@@ -55,7 +56,12 @@
           <p class="dark:text-gray-200">{{ nextProduction?.overview }}</p>
 
           <div>
-            <p class="text-lg font-semibold dark:text-gray-200">Next up:</p>
+            <p
+              class="text-lg font-semibold dark:text-gray-200"
+              v-show="nextProduction?.following_production?.title"
+            >
+              Next up:
+            </p>
             <router-link
               :to="{
                 name: 'home',
@@ -68,9 +74,11 @@
                 w-full
                 mb-2
                 bg-gray-100
-                dark:bg-gray-800 dark:text-gray-200
+                dark:bg-gray-800
+                dark:text-gray-200
                 hover:shadow-lg
               "
+              v-show="nextProduction?.following_production?.title"
             >
               <img
                 :src="nextProduction?.following_production?.poster_url"
@@ -130,6 +138,8 @@ export default class Home extends Vue {
 
     try {
       this.nextProduction = await getNextProductionAsync(date?.valueOf());
+      console.log(this.nextProduction);
+      console.log(this.nextProduction.following_production);
     } catch (e) {
       this.error = (e as Error).message;
       this.nextProduction = null;
