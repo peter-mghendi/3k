@@ -93,7 +93,8 @@
           </router-link>
           <router-link
             :to="{ name: 'home' }"
-            class="text-blue-500 font-semibold hover:underline"
+            class="font-semibold hover:underline"
+            style="color: #b91d47"
             v-show="$route.query.date"
           >
             &lt; Back to Today
