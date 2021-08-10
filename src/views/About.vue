@@ -1,6 +1,6 @@
 <template>
   <div class="about min-h-screen">
-    <img src="logo-transparent.png" alt="3k" class="mx-auto h-24" />
+    <img src="logo.svg" alt="3k" class="mx-auto h-24" />
     <h1 class="text-3xl dark:text-gray-200 mb-4">About 3k</h1>
 
     <div class="text-gray-500 mx-auto w-full md:w-4/5 lg:w-3/4 p-4">

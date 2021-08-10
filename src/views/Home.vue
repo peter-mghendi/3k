@@ -6,8 +6,7 @@
         text-center
         bg-gray-100
         text-gray-500
-        dark:bg-gray-800
-        dark:text-gray-400
+        dark:bg-gray-800 dark:text-gray-400
       "
       v-show="loading"
     >
@@ -74,8 +73,7 @@
                 w-full
                 mb-2
                 bg-gray-100
-                dark:bg-gray-800
-                dark:text-gray-200
+                dark:bg-gray-800 dark:text-gray-200
                 hover:shadow-lg
               "
               v-show="nextProduction?.following_production?.title"
